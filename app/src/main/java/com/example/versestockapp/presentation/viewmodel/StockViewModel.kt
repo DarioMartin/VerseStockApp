@@ -1,4 +1,4 @@
-package com.example.versestockapp.presentation
+package com.example.versestockapp.presentation.viewmodel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.versestockapp.data.Response
 import com.example.versestockapp.domain.model.Stock
-import com.example.versestockapp.domain.usecases.GetSuccessStocksUseCase
 import com.example.versestockapp.domain.usecases.StocksUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -83,7 +82,7 @@ class StockViewModel @Inject constructor(private val useCases: StocksUseCases) :
                     stocks.addAll(response.data?.toMutableList() ?: emptyList())
                 }
             }
-
         }
     }
+
 }

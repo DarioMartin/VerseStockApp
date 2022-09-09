@@ -11,9 +11,9 @@ class ServerDataSource(private val stocksApi: StocksApi) : IRemoteDataSource {
         return try {
             val serverStocks = stocksApi.getSuccessStocks()
             val stocks = serverStocks.body()?.stocks?.map { it.toDomainStock() } ?: emptyList()
-            return Response.Success(data = stocks)
+            Response.Success(data = stocks)
         } catch (e: Exception) {
-            return Response.Error("Could not load the stocks")
+            Response.Error("Could not load the stocks")
         }
     }
 
@@ -21,9 +21,9 @@ class ServerDataSource(private val stocksApi: StocksApi) : IRemoteDataSource {
         return try {
             val serverStocks = stocksApi.getErrorStocks()
             val stocks = serverStocks.body()?.stocks?.map { it.toDomainStock() } ?: emptyList()
-            return Response.Success(data = stocks)
+            Response.Success(data = stocks)
         } catch (e: Exception) {
-            return Response.Error("Could not load the stocks")
+            Response.Error("Could not load the stocks")
         }
     }
 
@@ -31,9 +31,9 @@ class ServerDataSource(private val stocksApi: StocksApi) : IRemoteDataSource {
         return try {
             val serverStocks = stocksApi.getEmptyStocks()
             val stocks = serverStocks.body()?.stocks?.map { it.toDomainStock() } ?: emptyList()
-            return Response.Success(data = stocks)
+            Response.Success(data = stocks)
         } catch (e: Exception) {
-            return Response.Error("Could not load the stocks")
+            Response.Error("Could not load the stocks")
         }
     }
 }

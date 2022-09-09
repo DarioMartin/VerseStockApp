@@ -1,5 +1,6 @@
 package com.example.versestockapp.di
 
+import com.example.versestockapp.BuildConfig
 import com.example.versestockapp.data.remote.ServerDataSource
 import com.example.versestockapp.data.remote.StocksApi
 import com.example.versestockapp.data.repository.IRemoteDataSource
@@ -42,7 +43,7 @@ object StocksModule {
     @Singleton
     fun provideRemoteDataSource(): IRemoteDataSource {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://storage.googleapis.com/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         return ServerDataSource(retrofit.create(StocksApi::class.java))

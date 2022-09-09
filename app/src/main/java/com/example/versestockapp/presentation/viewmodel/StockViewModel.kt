@@ -23,55 +23,19 @@ class StockViewModel @Inject constructor(private val useCases: StocksUseCases) :
         loadStocks()
     }
 
-    fun loadStocks() {
+    fun loadStocks() = loadItems { useCases.getSuccessStocksUseCase() }
+
+    fun loadError() = loadItems { useCases.getErrorStocksUseCase() }
+
+    fun loadEmpty() = loadItems { useCases.getEmptyStocksUseCase() }
+
+    private fun loadItems(call: suspend () -> Response<List<Stock>>) {
         loading.value = true
         error.value = null
 
         viewModelScope.launch {
             stocks.clear()
-            val response = useCases.getSuccessStocksUseCase()
-            loading.value = false
-
-            when (response) {
-                is Response.Error -> {
-                    error.value = Unit
-                }
-                is Response.Success -> {
-                    stocks.addAll(response.data?.toMutableList() ?: emptyList())
-                }
-            }
-
-        }
-    }
-
-    fun loadError() {
-        loading.value = true
-        error.value = null
-
-        viewModelScope.launch {
-            stocks.clear()
-            val response = useCases.getErrorStocksUseCase()
-            loading.value = false
-
-            when (response) {
-                is Response.Error -> {
-                    error.value = Unit
-                }
-                is Response.Success -> {
-                    stocks.addAll(response.data?.toMutableList() ?: emptyList())
-                }
-            }
-
-        }
-    }
-
-    fun loadEmpty() {
-        loading.value = true
-        error.value = null
-
-        viewModelScope.launch {
-            stocks.clear()
-            val response = useCases.getEmptyStocksUseCase()
+            val response = call()
             loading.value = false
 
             when (response) {

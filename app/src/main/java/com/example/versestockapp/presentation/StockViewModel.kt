@@ -1,6 +1,7 @@
 package com.example.versestockapp.presentation
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.versestockapp.domain.model.Stock
@@ -13,14 +14,19 @@ import javax.inject.Inject
 class StockViewModel @Inject constructor(val useCase: GetStocksUseCase) : ViewModel() {
 
     var stocks: MutableList<Stock> = mutableStateListOf()
+    var loading = mutableStateOf(false)
 
     init {
         loadStocks()
     }
 
     private fun loadStocks() {
+        loading.value = true
         viewModelScope.launch {
-            stocks = useCase().toMutableList()
+            stocks.clear()
+            val stocks = useCase().toMutableList()
+            loading.value = false
+            stocks.addAll(stocks)
         }
     }
 }

@@ -1,14 +1,14 @@
 package com.example.versestockapp.domain.model
 
-import java.lang.Exception
-import java.text.DecimalFormat
+import java.util.*
 
 
 fun pricePrinter(cents: Int): String {
-    val dec = DecimalFormat("#,###.##")
-
     return try {
-        dec.format(cents / 100.0)
+        val sb = StringBuilder()
+        val formatter = Formatter(sb, Locale.getDefault())
+        formatter.format("%(,.2f", cents / 100.00)
+        "$sb"
     } catch (e: Exception) {
         ""
     }

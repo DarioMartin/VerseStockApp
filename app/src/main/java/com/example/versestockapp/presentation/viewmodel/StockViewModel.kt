@@ -15,9 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class StockViewModel @Inject constructor(private val useCases: StocksUseCases) : ViewModel() {
 
-    var stocks: MutableList<Stock> = mutableStateListOf()
-    var loading = mutableStateOf(false)
-    var error: MutableState<Unit?> = mutableStateOf(null)
+    var uiState: MutableState<UIState> = mutableStateOf(UIState.Empty)
 
     init {
         loadStocks()
@@ -30,23 +28,26 @@ class StockViewModel @Inject constructor(private val useCases: StocksUseCases) :
     fun loadEmpty() = loadItems { useCases.getEmptyStocksUseCase() }
 
     private fun loadItems(call: suspend () -> Response<List<Stock>>) {
-        loading.value = true
-        error.value = null
+        uiState.value = UIState.Loading
 
         viewModelScope.launch {
-            stocks.clear()
-            val response = call()
-            loading.value = false
-
-            when (response) {
+            when (val response = call()) {
                 is Response.Error -> {
-                    error.value = Unit
+                    uiState.value = UIState.Error
                 }
                 is Response.Success -> {
-                    stocks.addAll(response.data?.toMutableList() ?: emptyList())
+                    uiState.value =
+                        response.data?.toMutableList()?.let { UIState.Content(it) } ?: UIState.Empty
                 }
             }
         }
     }
 
+}
+
+sealed class UIState {
+    object Loading : UIState()
+    object Error : UIState()
+    object Empty : UIState()
+    data class Content(val stocks: List<Stock>) : UIState()
 }

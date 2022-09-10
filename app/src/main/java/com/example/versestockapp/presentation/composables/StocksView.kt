@@ -1,4 +1,4 @@
-package com.example.versestockapp.presentation
+package com.example.versestockapp.presentation.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,7 +13,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.versestockapp.R
 import com.example.versestockapp.domain.model.Stock
+import com.example.versestockapp.presentation.Message
+import com.example.versestockapp.presentation.StockItem
 import com.example.versestockapp.presentation.viewmodel.StockViewModel
+import com.example.versestockapp.presentation.viewmodel.UIState
 
 
 @Composable
@@ -66,12 +69,16 @@ fun StocksView(viewModel: StockViewModel = viewModel()) {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize()
             ) {
-                if (viewModel.loading.value) CircularProgressIndicator(color = MaterialTheme.colors.onBackground)
-                else if (viewModel.error.value != null) Message(
-                    title = stringResource(R.string.error_title),
-                    body = stringResource(R.string.error_body)
-                )
-                else StockListCompose(viewModel.stocks)
+
+                when (val uiState = viewModel.uiState.value) {
+                    UIState.Error -> Message(
+                        title = stringResource(R.string.error_title),
+                        body = stringResource(R.string.error_body)
+                    )
+                    UIState.Loading -> CircularProgressIndicator(color = MaterialTheme.colors.onBackground)
+                    is UIState.Content -> StockListCompose(uiState.stocks)
+                    UIState.Empty -> StockListCompose(emptyList())
+                }
             }
         }
 
@@ -79,7 +86,7 @@ fun StocksView(viewModel: StockViewModel = viewModel()) {
 }
 
 @Composable
-private fun StockListCompose(stocks: MutableList<Stock>) {
+private fun StockListCompose(stocks: List<Stock>) {
     if (stocks.isEmpty())
         Message(
             title = stringResource(R.string.empty_list_title),

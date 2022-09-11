@@ -1,15 +1,10 @@
 package com.example.versestockapp.data.remote
 
+import com.example.versestockapp.BuildConfig
 import retrofit2.Response
 import retrofit2.http.GET
 
 interface StocksApi {
-    @GET("/cash-homework/cash-stocks-api/portfolio.json")
-    suspend fun getSuccessStocks(): Response<StocksResponse>
-
-    @GET("/cash-homework/cash-stocks-api/portfolio_malformed.json")
-    suspend fun getErrorStocks(): Response<StocksResponse>
-
-    @GET("/cash-homework/cash-stocks-api/portfolio_empty.json")
-    suspend fun getEmptyStocks(): Response<StocksResponse>
+    @GET("/cash-homework/cash-stocks-api/${BuildConfig.ENDPOINT}")
+    suspend fun getStocks(): Response<StocksResponse>
 }

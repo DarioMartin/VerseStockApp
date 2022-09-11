@@ -7,4 +7,5 @@
     <string name="empty_list_body">No stocks found, please try again later.</string>
     <string name="error_body">We couldn\'t get the stocks, please try again later.</string>
     <string name="error_title">There is a problem</string>
+    <string name="retry">Retry</string>
 </resources>

@@ -5,12 +5,8 @@ import com.example.versestockapp.data.remote.ServerDataSource
 import com.example.versestockapp.data.remote.StocksApi
 import com.example.versestockapp.data.repository.IRemoteDataSource
 import com.example.versestockapp.data.repository.StocksRepositoryImpl
-import com.example.versestockapp.domain.model.Stock
 import com.example.versestockapp.domain.repository.IStocksRepository
-import com.example.versestockapp.domain.usecases.GetEmptyStocksUseCase
-import com.example.versestockapp.domain.usecases.GetErrorStocksUseCase
-import com.example.versestockapp.domain.usecases.GetSuccessStocksUseCase
-import com.example.versestockapp.domain.usecases.StocksUseCases
+import com.example.versestockapp.domain.usecases.GetStocksUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object StocksModule {
+object AppModule {
 
     @Provides
     @Singleton
@@ -31,12 +27,8 @@ object StocksModule {
 
     @Provides
     @Singleton
-    fun provideStocksUseCases(repository: IStocksRepository): StocksUseCases {
-        return StocksUseCases(
-            getSuccessStocksUseCase = GetSuccessStocksUseCase(repository),
-            getErrorStocksUseCase = GetErrorStocksUseCase(repository),
-            getEmptyStocksUseCase = GetEmptyStocksUseCase(repository)
-        )
+    fun provideStocksUseCases(repository: IStocksRepository): GetStocksUseCase {
+        return GetStocksUseCase(repository)
     }
 
     @Provides

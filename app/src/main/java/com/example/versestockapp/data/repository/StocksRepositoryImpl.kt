@@ -6,16 +6,8 @@ import com.example.versestockapp.domain.repository.IStocksRepository
 
 class StocksRepositoryImpl(private val remoteDataSource: IRemoteDataSource) :
     IStocksRepository {
-    override suspend fun getSuccessStocks(): Response<List<Stock>> {
-        return remoteDataSource.getSuccessStocks()
-    }
 
-    override suspend fun getErrorStocks(): Response<List<Stock>> {
-        return remoteDataSource.getErrorStocks()
+    override suspend fun getStocks(): Response<List<Stock>> {
+        return remoteDataSource.getStocks()
     }
-
-    override suspend fun getEmptyStocks(): Response<List<Stock>> {
-        return remoteDataSource.getEmptyStocks()
-    }
-
 }

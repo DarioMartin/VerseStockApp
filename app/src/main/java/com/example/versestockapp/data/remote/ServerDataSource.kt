@@ -7,29 +7,10 @@ import com.example.versestockapp.domain.model.Stock
 import java.lang.Exception
 
 class ServerDataSource(private val stocksApi: StocksApi) : IRemoteDataSource {
-    override suspend fun getSuccessStocks(): Response<List<Stock>> {
-        return try {
-            val serverStocks = stocksApi.getSuccessStocks()
-            val stocks = serverStocks.body()?.stocks?.map { it.toDomainStock() } ?: emptyList()
-            Response.Success(data = stocks)
-        } catch (e: Exception) {
-            Response.Error("Could not load the stocks")
-        }
-    }
 
-    override suspend fun getErrorStocks(): Response<List<Stock>> {
+    override suspend fun getStocks(): Response<List<Stock>> {
         return try {
-            val serverStocks = stocksApi.getErrorStocks()
-            val stocks = serverStocks.body()?.stocks?.map { it.toDomainStock() } ?: emptyList()
-            Response.Success(data = stocks)
-        } catch (e: Exception) {
-            Response.Error("Could not load the stocks")
-        }
-    }
-
-    override suspend fun getEmptyStocks(): Response<List<Stock>> {
-        return try {
-            val serverStocks = stocksApi.getEmptyStocks()
+            val serverStocks = stocksApi.getStocks()
             val stocks = serverStocks.body()?.stocks?.map { it.toDomainStock() } ?: emptyList()
             Response.Success(data = stocks)
         } catch (e: Exception) {

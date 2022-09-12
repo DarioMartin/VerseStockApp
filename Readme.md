@@ -20,6 +20,10 @@ expected behavior:
 
 About the exercise
 ------  
+**Time spent**
+For this exercise I have spent around 7 hours. 3 hours for architectural design and logic
+implementation, 3 for presentation and 1 hour for testing.
+
 **The architectural approach you took and why**
 For this exercise I have decided to follow the architecture proposed by Google for the development
 of Android applications since it is the one I have been using lately and allows the application to

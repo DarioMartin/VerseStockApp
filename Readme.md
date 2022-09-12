@@ -64,6 +64,8 @@ I have used:
 - **JUnit** for tests
 
 **Any other information that you would like us to know**
-I have only included tests for the function that paints the stock value and some simple ViewModel
+For testing I have only included tests for the function that paints the stock value and some simple ViewModel
 tests. I am not very experienced with testing coroutines so I have reused some code from some
 personal projects for this purpose.
+
+I have also added support for DarkTheme using JetpackCompose.

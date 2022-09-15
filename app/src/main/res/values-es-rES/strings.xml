@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="success">Éxito</string>
+    <string name="error">Error</string>
+    <string name="empty">Vacío</string>
+    <string name="empty_list_title">Lista vacía</string>
+    <string name="empty_list_body">No se han encontrado stocks, por favor, prueba de nuevo más tarde.</string>
+    <string name="error_body">No hemos podido recuperar los stocks, por favor, prueba de nuevo más tarde.</string>
+    <string name="error_title">Ha ocurrido un problema</string>
+    <string name="retry">Reintentar</string>
+</resources>
